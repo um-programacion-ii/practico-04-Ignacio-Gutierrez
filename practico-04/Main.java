@@ -72,7 +72,7 @@ public class Main {
                 new Elemento("Manzanas", 4),
                 new Elemento("Azúcar", 150),
                 new Elemento("Canela", 10),
-                new Elemento("Ternera", 1),
+                new Elemento("Ternera", 3),
                 new Elemento("Papa", 4)
         );
 
@@ -88,6 +88,7 @@ public class Main {
                 new Utensilio("Sartén", 100),
                 new Utensilio("Sartén", 100),
                 new Utensilio("Molde para tarta", 100),
+                new Utensilio("Horno", 10),
                 new Utensilio("Horno", 10),
                 new Utensilio("Bandeja", 100),
                 new Utensilio("Tenedor", 100),
@@ -137,7 +138,7 @@ public class Main {
         System.out.printf(" Domingo a Jueves\n-----------------------------\n");
         final AtomicInteger iteracion = new AtomicInteger(0);
         for (Chef chef : chefsDomingoAJueves) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 1; i++) {
                 executorService1.submit(() -> {
                     Map.Entry<String, Integer> recetaAleatoria = recetasList.get(random.nextInt(recetasList.size()));
                     System.out.println(recetaAleatoria.getKey());

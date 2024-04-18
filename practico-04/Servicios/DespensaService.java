@@ -9,6 +9,7 @@ import Recetas.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 public class DespensaService {
 
@@ -59,9 +60,11 @@ public class DespensaService {
     }
 
     public static void renovarUtensilios(Estante estante) {
-        for (Utensilio utensilio : estante.getUtensilios().values()) {
-            if (utensilio.getVidaUtil() <= 0) {
-                utensilio.setVidaUtil(500);
+        for (Queue<Utensilio> utensilios : estante.getUtensilios().values()) {
+            for (Utensilio utensilio : utensilios) {
+                if (utensilio.getVidaUtil() <= 0) {
+                    utensilio.setVidaUtil(500);
+                }
             }
         }
     }

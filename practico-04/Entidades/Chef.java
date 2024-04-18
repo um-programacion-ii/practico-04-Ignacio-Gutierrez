@@ -20,7 +20,6 @@ public class Chef {
             boolean listosParaCocinar = DespensaService.verificarStockYVidaUtil(numeroReceta, despensa, estante);
             if (listosParaCocinar) {
                 CocinaService.comenzarACocinar(numeroReceta, despensa, estante);
-                Thread.sleep(4000);
                 System.out.println("El Chef " + nombre + ", con " + estrellasMichelin + " estrellas Michelin, espera que disfrute su comida.");
             } else {
                 System.out.println("El Chef " + nombre + ", con " + estrellasMichelin + " estrellas Michelin, dice que debe pedir algo preparable.");

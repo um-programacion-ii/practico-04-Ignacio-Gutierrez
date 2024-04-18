@@ -3,11 +3,13 @@ package Entidades;
 import Excepciones.VidaUtilInsuficiente;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 public class Estante {
-    private static Estante instance;
-    private Map<String, Utensilio> utensilios = new HashMap<>();
+    private static Estante instance = null;
+    private Map<String, Queue<Utensilio>> utensilios= new HashMap<>();
 
     private Estante() {
     }
@@ -18,28 +20,30 @@ public class Estante {
         return instance;
     }
 
-
-    public void addUtensilio(Utensilio nuevoUtensilio) {
+    public synchronized void addUtensilio(Utensilio nuevoUtensilio) {
         String nombre = nuevoUtensilio.getNombre().toString();
-        utensilios.put(nombre, nuevoUtensilio);
+        utensilios.putIfAbsent(nombre, new LinkedList<>());
+        utensilios.get(nombre).add(nuevoUtensilio);
     }
 
-    public void getUtensilio(String nombre, int vidaUtil) throws VidaUtilInsuficiente {
-        if (utensilios.containsKey(nombre)) {
-            Utensilio utensilio = utensilios.get(nombre);
-            if (utensilio.getVidaUtil() < vidaUtil) {
-                throw new VidaUtilInsuficiente("No hay suficiente vida útil de " + nombre + " en la despensa.");
-            }
-            utensilio.utilizar(vidaUtil);
-        } else {
-            throw new VidaUtilInsuficiente("No es posible desgastar " + vidaUtil + " de " + nombre + ", no hay en la despensa.");
+    public synchronized Utensilio getUtensilio(String nombre, int vidaUtilRequerida) throws VidaUtilInsuficiente {
+        Queue<Utensilio> utensiliosDeEsteTipo = utensilios.get(nombre);
+        if (utensiliosDeEsteTipo == null || utensiliosDeEsteTipo.isEmpty()) {
+            throw new VidaUtilInsuficiente("No hay más utensilios de tipo " + nombre + " disponibles.");
         }
+        Utensilio utensilio = utensiliosDeEsteTipo.poll();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        return utensilio;
     }
 
     public boolean checkUtensilio(String nombre, int vidaUtil) throws VidaUtilInsuficiente {
         if (utensilios.containsKey(nombre)) {
-            Utensilio utensilio = utensilios.get(nombre);
-            if (((Utensilio) utensilio).getVidaUtil() >= vidaUtil) {
+            Queue<Utensilio> utensiliosDeEsteTipo = utensilios.get(nombre);
+            if (!utensiliosDeEsteTipo.isEmpty() && utensiliosDeEsteTipo.peek().getVidaUtil() >= vidaUtil) {
                 return true;
             } else {
                 throw new VidaUtilInsuficiente("No hay suficiente vida útil de " + nombre + " en la despensa.");
@@ -51,12 +55,12 @@ public class Estante {
 
     public void mostrarUtensilios() {
         System.out.println("Utensilios en la despensa:");
-        for (Map.Entry<String, Utensilio> entry : utensilios.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue().getVidaUtil());
+        for (Map.Entry<String, Queue<Utensilio>> entry : utensilios.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue().peek().getVidaUtil());
         }
     }
 
-    public Map<String, Utensilio> getUtensilios() {
+    public Map<String, Queue<Utensilio>> getUtensilios() {
         return utensilios;
     }
 
