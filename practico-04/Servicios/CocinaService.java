@@ -1,9 +1,6 @@
 package Servicios;
 
-import Entidades.Despensa;
-import Entidades.Ingrediente;
-import Entidades.Receta;
-import Entidades.Utensilio;
+import Entidades.*;
 import Excepciones.StockInsuficiente;
 import Excepciones.VidaUtilInsuficiente;
 import Interfaces.Cocinable;
@@ -40,19 +37,19 @@ public class CocinaService {
         return instancia;
     }
 
-    public static void comenzarACocinar(int numeroReceta, Despensa despensa) throws VidaUtilInsuficiente, StockInsuficiente {
+    public static void comenzarACocinar(int numeroReceta, Despensa despensa, Estante estante) throws VidaUtilInsuficiente, StockInsuficiente {
         Receta receta = (Receta) recetas.get(numeroReceta);
 
         ((Cocinable) receta).cocinar();
-        for (Ingrediente ingrediente : receta.getIngredientes()) {
-            String nombreIngrediente = ingrediente.getNombre();
-            int cantidadRequerida = ingrediente.getCantidad();
-            despensa.getElemento(nombreIngrediente, cantidadRequerida);
+        for (Elemento elemento : receta.getIngredientes()) {
+            String nombreIngrediente = elemento.getNombre();
+            int cantidadRequerida = elemento.getCantidad();
+            despensa.getIngrediente(nombreIngrediente, cantidadRequerida);
         }
         for (Utensilio utensilio : receta.getUtensilios()) {
             String nombreUtensilio = utensilio.getNombre();
             int vidaUtilRequerida = utensilio.getVidaUtil();
-            despensa.getUtensilio(nombreUtensilio, vidaUtilRequerida);
+            estante.getUtensilio(nombreUtensilio, vidaUtilRequerida);
         }
     }
 }

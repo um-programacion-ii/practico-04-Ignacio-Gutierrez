@@ -1,10 +1,12 @@
 package Entidades;
 
-public class Ingrediente implements Interfaces.Ingrediente {
+import Interfaces.Ingrediente;
+
+public class Elemento implements Ingrediente {
     private String nombre;
     private int cantidad;
 
-    public Ingrediente(String nombre, int cantidad) {
+    public Elemento(String nombre, int cantidad) {
         this.nombre = nombre;
         this.cantidad = cantidad;
     }

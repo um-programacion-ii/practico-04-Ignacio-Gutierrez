@@ -1,6 +1,7 @@
 import Entidades.Chef;
 import Entidades.Despensa;
-import Entidades.Ingrediente;
+import Entidades.Estante;
+import Entidades.Elemento;
 import Entidades.Utensilio;
 import Servicios.DespensaService;
 
@@ -15,96 +16,105 @@ public class Main {
         ExecutorService executorService1 = Executors.newFixedThreadPool(3);
         ExecutorService executorService2 = Executors.newFixedThreadPool(5);
 
+        Estante estante = Estante.getInstance();
+
         //chef's de Domingo a Jueves
         Despensa despensa1 = new Despensa();
-        Chef chef1 = new Chef("Francis Mallmann", 0, despensa1);
+        Chef chef1 = new Chef("Francis Mallmann", 0, despensa1, estante);
 
         Despensa despensa2 = new Despensa();
-        Chef chef2 = new Chef("Mauro Colagreco", 1, despensa2);
+        Chef chef2 = new Chef("Mauro Colagreco", 1, despensa2, estante);
 
         Despensa despensa3 = new Despensa();
-        Chef chef3 = new Chef("Francis Mallmann", 0, despensa3);
+        Chef chef3 = new Chef("Francis Mallmann", 0, despensa3, estante);
 
 
         //chef's Viernes, Sábados, Domingos y Feriados
         Despensa despensa4 = new Despensa();
-        Chef chef4 = new Chef("Germán Martitegui", 0, despensa4);
+        Chef chef4 = new Chef("Germán Martitegui", 0, despensa4, estante);
 
         Despensa despensa5 = new Despensa();
-        Chef chef5 = new Chef("Narda Lepes", 0, despensa5);
+        Chef chef5 = new Chef("Narda Lepes", 0, despensa5, estante);
 
         Despensa despensa6 = new Despensa();
-        Chef chef6 = new Chef("Donato De Santis", 0, despensa6);
+        Chef chef6 = new Chef("Donato De Santis", 0, despensa6, estante);
 
         Despensa despensa7 = new Despensa();
-        Chef chef7 = new Chef("Pablo Massey", 0, despensa7);
+        Chef chef7 = new Chef("Pablo Massey", 0, despensa7, estante);
 
         Despensa despensa8 = new Despensa();
-        Chef chef8 = new Chef("Christophe Krywonis", 0, despensa8);
+        Chef chef8 = new Chef("Christophe Krywonis", 0, despensa8, estante);
 
 
         List<Despensa> despensas = Arrays.asList(despensa1, despensa2, despensa3, despensa4, despensa7, despensa8);
 
 
-        List<Ingrediente> ingredientes = Arrays.asList(
-                new Ingrediente("Arroz", 5000),
-                new Ingrediente("Agua", 5000),
-                new Ingrediente("Leche", 1000),
-                new Ingrediente("Azucar", 300),
-                new Ingrediente("Canela", 25),
-                new Ingrediente("Lechuga romana", 1),
-                new Ingrediente("Pechuga de pollo", 1),
-                new Ingrediente("Pan de molde", 2),
-                new Ingrediente("Queso parmesano", 50),
-                new Ingrediente("Salsa César", 50),
-                new Ingrediente("Huevo", 1),
-                new Ingrediente("Agua", 400),
-                new Ingrediente("Caldo de verduras", 1),
-                new Ingrediente("Zanahoria", 2),
-                new Ingrediente("Apio", 2),
-                new Ingrediente("Patata", 2),
-                new Ingrediente("Cebolla", 1),
-                new Ingrediente("Ajo", 2),
-                new Ingrediente("Masa de hojaldre", 1),
-                new Ingrediente("Manzanas", 4),
-                new Ingrediente("Azúcar", 150),
-                new Ingrediente("Canela", 10),
-                new Ingrediente("Ternera", 1),
-                new Ingrediente("Papa", 4)
+        List<Elemento> elementos = Arrays.asList(
+                new Elemento("Arroz", 5000),
+                new Elemento("Agua", 5000),
+                new Elemento("Leche", 1000),
+                new Elemento("Azucar", 300),
+                new Elemento("Canela", 25),
+                new Elemento("Lechuga romana", 1),
+                new Elemento("Pechuga de pollo", 1),
+                new Elemento("Pan de molde", 2),
+                new Elemento("Queso parmesano", 50),
+                new Elemento("Salsa César", 50),
+                new Elemento("Huevo", 1),
+                new Elemento("Agua", 400),
+                new Elemento("Caldo de verduras", 1),
+                new Elemento("Zanahoria", 2),
+                new Elemento("Apio", 2),
+                new Elemento("Patata", 2),
+                new Elemento("Cebolla", 1),
+                new Elemento("Ajo", 2),
+                new Elemento("Masa de hojaldre", 1),
+                new Elemento("Manzanas", 4),
+                new Elemento("Azúcar", 150),
+                new Elemento("Canela", 10),
+                new Elemento("Ternera", 1),
+                new Elemento("Papa", 4)
         );
 
         List<Utensilio> utensilios = Arrays.asList(
-                new Utensilio("Olla", 2),
-                new Utensilio("Cuchara", 4),
-                new Utensilio("Tabla de cortar", 1),
-                new Utensilio("Cuchillo", 4),
-                new Utensilio("Sartén", 1),
-                new Utensilio("Molde para tarta", 1),
-                new Utensilio("Horno", 1),
-                new Utensilio("Bandeja", 1),
-                new Utensilio("Tenedor", 1)
+                new Utensilio("Olla", 100),
+                new Utensilio("Olla", 100),
+                new Utensilio("Cuchara", 100),
+                new Utensilio("Cuchara", 100),
+                new Utensilio("Cuchara", 100),
+                new Utensilio("Cuchara", 100),
+                new Utensilio("Tabla de cortar", 100),
+                new Utensilio("Cuchillo", 100),
+                new Utensilio("Sartén", 100),
+                new Utensilio("Sartén", 100),
+                new Utensilio("Molde para tarta", 100),
+                new Utensilio("Horno", 10),
+                new Utensilio("Bandeja", 100),
+                new Utensilio("Tenedor", 100),
+                new Utensilio("Tenedor", 100),
+                new Utensilio("Tenedor", 100),
+                new Utensilio("Tenedor", 100),
+                new Utensilio("Tenedor", 100)
+
         );
 
 
         for (Despensa despensa : despensas) {
-            for (Ingrediente original : ingredientes) {
-                Ingrediente copy = new Ingrediente(original.getNombre(), original.getCantidad());
-                despensa.addElemento(copy);
+            for (Elemento original : elementos) {
+                Elemento copy = new Elemento(original.getNombre(), original.getCantidad());
+                despensa.addIngrediente(copy);
             }
             for (Utensilio original : utensilios) {
                 Utensilio copy = new Utensilio(original.getNombre(), original.getVidaUtil());
-                despensa.addUtensilio(copy);
+                estante.addUtensilio(copy);
             }
         }
 
-        for (Ingrediente original : ingredientes) {
-            Ingrediente copy = new Ingrediente(original.getNombre(), 0);
-            despensa6.addElemento(copy);
+        for (Elemento original : elementos) {
+            Elemento copy = new Elemento(original.getNombre(), 0);
+            despensa6.addIngrediente(copy);
         }
-        for (Utensilio original : utensilios) {
-            Utensilio copy = new Utensilio(original.getNombre(), 0);
-            despensa6.addUtensilio(copy);
-        }
+
 
         Map<String, Integer> recetas = new HashMap<>();
         recetas.put("\nArroz con Leche:", 1);
@@ -167,7 +177,6 @@ public class Main {
         }
         System.out.printf("\nIteraciones: %d\n", iteracion2.get());
 
-        DespensaService.renovarUtensilios(despensa6);
         DespensaService.renovarIngredientes(despensa6);
 
         System.out.println("\nArroz con Leche:");

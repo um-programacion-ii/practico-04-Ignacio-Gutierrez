@@ -1,16 +1,16 @@
 package Recetas;
 
-import Entidades.Ingrediente;
+import Entidades.Elemento;
 import Entidades.Receta;
 import Entidades.Utensilio;
 import Interfaces.Cocinable;
 
 public class TartaDeManzana extends Receta implements Cocinable {
     public TartaDeManzana() {
-        super(60, new Ingrediente[]{new Ingrediente("Masa de hojaldre", 1),
-                        new Ingrediente("Manzanas", 4),
-                        new Ingrediente("Azúcar", 150),
-                        new Ingrediente("Canela", 10)},
+        super(60, new Elemento[]{new Elemento("Masa de hojaldre", 1),
+                        new Elemento("Manzanas", 4),
+                        new Elemento("Azúcar", 150),
+                        new Elemento("Canela", 10)},
                 new Utensilio[]{new Utensilio("Molde para tarta", 1),
                         new Utensilio("Cuchillo", 1),
                         new Utensilio("Horno", 1)},

@@ -2,13 +2,13 @@ package Entidades;
 
 public class Receta {
     protected int tiempoCoccion;
-    protected Ingrediente[] ingredientes;
+    protected Elemento[] elementos;
     protected Utensilio[] utensilios;
     protected String preparacion;
 
-    public Receta(int tiempoCoccion, Ingrediente[] ingredientes, Utensilio[] utensilios, String preparacion) {
+    public Receta(int tiempoCoccion, Elemento[] elementos, Utensilio[] utensilios, String preparacion) {
         this.tiempoCoccion = tiempoCoccion;
-        this.ingredientes = ingredientes;
+        this.elementos = elementos;
         this.utensilios = utensilios;
         this.preparacion = preparacion;
     }
@@ -16,8 +16,8 @@ public class Receta {
     public void mostrarReceta() {
         System.out.println("Tiempo de cocción: " + tiempoCoccion + " minutos");
         System.out.println("Ingredientes:");
-        for (Ingrediente ingrediente : ingredientes) {
-            System.out.println(ingrediente.getNombre() + ": " + ingrediente.getCantidad());
+        for (Elemento elemento : elementos) {
+            System.out.println(elemento.getNombre() + ": " + elemento.getCantidad());
         }
         System.out.println("Preparación: " + preparacion);
     }
@@ -30,8 +30,8 @@ public class Receta {
         this.tiempoCoccion = tiempoCoccion;
     }
 
-    public void setIngredientes(Ingrediente[] ingredientes) {
-        this.ingredientes = ingredientes;
+    public void setIngredientes(Elemento[] elementos) {
+        this.elementos = elementos;
     }
 
     public void setUtensilios(Utensilio[] utensilios) {
@@ -46,8 +46,8 @@ public class Receta {
         this.preparacion = preparacion;
     }
 
-    public Ingrediente[] getIngredientes() {
-        return this.ingredientes;
+    public Elemento[] getIngredientes() {
+        return this.elementos;
     }
 
     public Utensilio[] getUtensilios() {

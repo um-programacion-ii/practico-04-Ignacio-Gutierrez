@@ -28,6 +28,3 @@ replay_pid*
 
 # Compiled output
 out/
-
-# Ignore the .gitignore file itself
-.gitignore

@@ -1,17 +1,17 @@
 package Recetas;
 
-import Entidades.Ingrediente;
+import Entidades.Elemento;
 import Entidades.Receta;
 import Entidades.Utensilio;
 import Interfaces.Cocinable;
 
 public class EnsaladaCesar extends Receta implements Cocinable {
     public EnsaladaCesar() {
-        super(15, new Ingrediente[]{new Ingrediente("Lechuga romana", 1),
-                        new Ingrediente("Pechuga de pollo", 1),
-                        new Ingrediente("Pan de molde", 2),
-                        new Ingrediente("Queso parmesano", 50),
-                        new Ingrediente("Salsa César", 50)},
+        super(15, new Elemento[]{new Elemento("Lechuga romana", 1),
+                        new Elemento("Pechuga de pollo", 1),
+                        new Elemento("Pan de molde", 2),
+                        new Elemento("Queso parmesano", 50),
+                        new Elemento("Salsa César", 50)},
                 new Utensilio[]{new Utensilio("Tabla de cortar", 1),
                         new Utensilio("Cuchillo", 1),
                         new Utensilio("Sartén", 1)},

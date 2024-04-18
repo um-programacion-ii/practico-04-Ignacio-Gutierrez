@@ -1,9 +1,10 @@
 package Entidades;
 
+import Interfaces.Despensable;
 import Interfaces.Ingrediente;
 import Interfaces.Reutilizable;
 
-public class Utensilio implements Ingrediente, Reutilizable {
+public class Utensilio implements Despensable, Reutilizable {
     private String nombre;
     private int vidaUtil;
 

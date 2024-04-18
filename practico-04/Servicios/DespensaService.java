@@ -1,8 +1,6 @@
 package Servicios;
 
-import Entidades.Despensa;
-import Entidades.Receta;
-import Entidades.Utensilio;
+import Entidades.*;
 import Excepciones.StockInsuficiente;
 import Excepciones.VidaUtilInsuficiente;
 import Interfaces.Cocinable;
@@ -26,15 +24,15 @@ public class DespensaService {
     }
 
 
-    public static boolean verificarStockYVidaUtil(int numeroReceta, Despensa despensa) {
+    public static boolean verificarStockYVidaUtil(int numeroReceta, Despensa despensa, Estante estante) {
         Receta receta = (Receta) recetas.get(numeroReceta);
 
         boolean ingredientesSuficientes = true;
-        for (Entidades.Ingrediente ingrediente : receta.getIngredientes()) {
-            String nombreIngrediente = ingrediente.getNombre();
-            int cantidadRequerida = ingrediente.getCantidad();
+        for (Elemento elemento : receta.getIngredientes()) {
+            String nombreIngrediente = elemento.getNombre();
+            int cantidadRequerida = elemento.getCantidad();
             try {
-                despensa.checkElemento(nombreIngrediente, cantidadRequerida);
+                despensa.checkIngrediente(nombreIngrediente, cantidadRequerida);
             } catch (StockInsuficiente e) {
                 ingredientesSuficientes = false;
                 System.out.println(e.getMessage());
@@ -48,7 +46,7 @@ public class DespensaService {
                 String nombreUtensilio = utensilio.getNombre();
                 int vidaUtilRequerida = utensilio.getVidaUtil();
                 try {
-                    utensiliosSuficientes = despensa.checkUtensilio(nombreUtensilio, vidaUtilRequerida);
+                    utensiliosSuficientes = estante.checkUtensilio(nombreUtensilio, vidaUtilRequerida);
                 } catch (VidaUtilInsuficiente e) {
                     utensiliosSuficientes = false;
                     System.out.println(e.getMessage());
@@ -60,8 +58,8 @@ public class DespensaService {
         return ingredientesSuficientes && utensiliosSuficientes;
     }
 
-    public static void renovarUtensilios(Despensa despensa) {
-        for (Utensilio utensilio : despensa.getUtensilios().values()) {
+    public static void renovarUtensilios(Estante estante) {
+        for (Utensilio utensilio : estante.getUtensilios().values()) {
             if (utensilio.getVidaUtil() <= 0) {
                 utensilio.setVidaUtil(500);
             }
@@ -69,7 +67,7 @@ public class DespensaService {
     }
 
     public static void renovarIngredientes(Despensa despensa) {
-        for (Ingrediente ingrediente : despensa.getIngredientes().values()) {
+        for (Ingrediente ingrediente : despensa.getElemento().values()) {
             if (ingrediente.getCantidad() <= 0) {
                 ingrediente.setCantidad(5000);
             }
