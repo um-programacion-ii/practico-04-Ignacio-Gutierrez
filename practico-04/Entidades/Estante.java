@@ -32,6 +32,7 @@ public class Estante {
             throw new VidaUtilInsuficiente("No hay más utensilios de tipo " + nombre + " disponibles.");
         }
         Utensilio utensilio = utensiliosDeEsteTipo.poll();
+        utensilio.utilizar(vidaUtilRequerida);
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
