@@ -25,7 +25,7 @@ public class DespensaService {
     }
 
 
-    public static boolean verificarStockYVidaUtil(int numeroReceta, Despensa despensa, Estante estante) {
+    public static boolean verificarStockIngredientes(int numeroReceta, Despensa despensa) {
         Receta receta = (Receta) recetas.get(numeroReceta);
 
         boolean ingredientesSuficientes = true;
@@ -40,23 +40,26 @@ public class DespensaService {
                 break;
             }
         }
+        return ingredientesSuficientes;
+    }
+
+
+    public static boolean verificarVidaUtilUtensilios(int numeroReceta, Estante estante) {
+        Receta receta = (Receta) recetas.get(numeroReceta);
 
         boolean utensiliosSuficientes = true;
-        if (ingredientesSuficientes) {
-            for (Utensilio utensilio : receta.getUtensilios()) {
-                String nombreUtensilio = utensilio.getNombre();
-                int vidaUtilRequerida = utensilio.getVidaUtil();
-                try {
-                    utensiliosSuficientes = estante.checkUtensilio(nombreUtensilio, vidaUtilRequerida);
-                } catch (VidaUtilInsuficiente e) {
-                    utensiliosSuficientes = false;
-                    System.out.println(e.getMessage());
-                    break;
-                }
+        for (Utensilio utensilio : receta.getUtensilios()) {
+            String nombreUtensilio = utensilio.getNombre();
+            int vidaUtilRequerida = utensilio.getVidaUtil();
+            try {
+                utensiliosSuficientes = estante.checkUtensilio(nombreUtensilio, vidaUtilRequerida);
+            } catch (VidaUtilInsuficiente e) {
+                utensiliosSuficientes = false;
+                System.out.println(e.getMessage());
+                break;
             }
         }
-
-        return ingredientesSuficientes && utensiliosSuficientes;
+        return utensiliosSuficientes;
     }
 
     public static void renovarUtensilios(Estante estante) {

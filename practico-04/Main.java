@@ -26,7 +26,7 @@ public class Main {
         Chef chef2 = new Chef("Mauro Colagreco", 1, despensa2, estante);
 
         Despensa despensa3 = new Despensa();
-        Chef chef3 = new Chef("Francis Mallmann", 0, despensa3, estante);
+        Chef chef3 = new Chef("Dolli Irigoyen", 0, despensa3, estante);
 
 
         //chef's Viernes, Sábados, Domingos y Feriados
@@ -50,51 +50,51 @@ public class Main {
 
 
         List<Elemento> elementos = Arrays.asList(
-                new Elemento("Arroz", 5000),
-                new Elemento("Agua", 5000),
-                new Elemento("Leche", 1000),
-                new Elemento("Azucar", 300),
-                new Elemento("Canela", 25),
-                new Elemento("Lechuga romana", 1),
-                new Elemento("Pechuga de pollo", 1),
-                new Elemento("Pan de molde", 2),
-                new Elemento("Queso parmesano", 50),
-                new Elemento("Salsa César", 50),
-                new Elemento("Huevo", 1),
-                new Elemento("Agua", 400),
-                new Elemento("Caldo de verduras", 1),
-                new Elemento("Zanahoria", 2),
-                new Elemento("Apio", 2),
-                new Elemento("Patata", 2),
-                new Elemento("Cebolla", 1),
-                new Elemento("Ajo", 2),
-                new Elemento("Masa de hojaldre", 1),
-                new Elemento("Manzanas", 4),
-                new Elemento("Azúcar", 150),
-                new Elemento("Canela", 10),
-                new Elemento("Ternera", 3),
-                new Elemento("Papa", 4)
+                new Elemento("Arroz", 50000),
+                new Elemento("Agua", 50000),
+                new Elemento("Leche", 10000),
+                new Elemento("Azucar", 3000),
+                new Elemento("Canela", 250),
+                new Elemento("Lechuga romana", 10),
+                new Elemento("Pechuga de pollo", 10),
+                new Elemento("Pan de molde", 20),
+                new Elemento("Queso parmesano", 500),
+                new Elemento("Salsa César", 500),
+                new Elemento("Huevo", 10),
+                new Elemento("Agua", 4000),
+                new Elemento("Caldo de verduras", 10),
+                new Elemento("Zanahoria", 20),
+                new Elemento("Apio", 20),
+                new Elemento("Patata", 20),
+                new Elemento("Cebolla", 10),
+                new Elemento("Ajo", 20),
+                new Elemento("Masa de hojaldre", 10),
+                new Elemento("Manzanas", 40),
+                new Elemento("Azúcar", 1500),
+                new Elemento("Canela", 100),
+                new Elemento("Ternera", 30),
+                new Elemento("Papa", 40)
         );
 
         List<Utensilio> utensilios = Arrays.asList(
                 new Utensilio("Olla", 100),
                 new Utensilio("Olla", 100),
                 new Utensilio("Cuchara", 100),
-                new Utensilio("Cuchara", 100),
-                new Utensilio("Cuchara", 100),
-                new Utensilio("Cuchara", 100),
+                //new Utensilio("Cuchara", 100),
+                //new Utensilio("Cuchara", 100),
+                //new Utensilio("Cuchara", 100),
                 new Utensilio("Tabla de cortar", 100),
                 new Utensilio("Cuchillo", 100),
-                new Utensilio("Sartén", 100),
+                //new Utensilio("Sartén", 100),
                 new Utensilio("Sartén", 100),
                 new Utensilio("Molde para tarta", 100),
                 new Utensilio("Horno", 10),
-                new Utensilio("Horno", 10),
+                //new Utensilio("Horno", 10),
                 new Utensilio("Bandeja", 100),
-                new Utensilio("Tenedor", 100),
-                new Utensilio("Tenedor", 100),
-                new Utensilio("Tenedor", 100),
-                new Utensilio("Tenedor", 100),
+                //new Utensilio("Tenedor", 100),
+                //new Utensilio("Tenedor", 100),
+                //new Utensilio("Tenedor", 100),
+                //new Utensilio("Tenedor", 100),
                 new Utensilio("Tenedor", 100)
 
         );
@@ -105,17 +105,11 @@ public class Main {
                 Elemento copy = new Elemento(original.getNombre(), original.getCantidad());
                 despensa.addIngrediente(copy);
             }
-            for (Utensilio original : utensilios) {
-                Utensilio copy = new Utensilio(original.getNombre(), original.getVidaUtil());
-                estante.addUtensilio(copy);
-            }
         }
-
-        for (Elemento original : elementos) {
-            Elemento copy = new Elemento(original.getNombre(), 0);
-            despensa6.addIngrediente(copy);
+        for (Utensilio utensilio : utensilios) {
+            Utensilio copy = new Utensilio(utensilio.getNombre(), utensilio.getVidaUtil());
+            estante.addUtensilio(copy);
         }
-
 
         Map<String, Integer> recetas = new HashMap<>();
         recetas.put("\nArroz con Leche:", 1);
@@ -136,18 +130,16 @@ public class Main {
         Random random = new Random();
 
         System.out.printf(" Domingo a Jueves\n-----------------------------\n");
-        final AtomicInteger iteracion = new AtomicInteger(0);
         for (Chef chef : chefsDomingoAJueves) {
-            for (int i = 0; i < 1; i++) {
-                executorService1.submit(() -> {
-                    Map.Entry<String, Integer> recetaAleatoria = recetasList.get(random.nextInt(recetasList.size()));
-                    System.out.println(recetaAleatoria.getKey());
-                    chef.prepararReceta(recetaAleatoria.getValue());
-                    iteracion.incrementAndGet();
-                });
+            for (int i = 0; i < 3; i++) {
+                Map.Entry<String, Integer> recetaAleatoria = recetasList.get(random.nextInt(recetasList.size()));
+                chef.agregarRecetaPendiente(recetaAleatoria.getValue());
             }
-        }
 
+            executorService1.submit(() -> {
+                chef.prepararReceta();
+            });
+        }
 
         executorService1.shutdown();
         try {
@@ -155,19 +147,20 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.printf("\nIteraciones: %d\n", iteracion.get());
 
-        final AtomicInteger iteracion2 = new AtomicInteger(0);
         System.out.printf("\n Viernes a Domingo y Feriados\n-----------------------------\n");
+
+
         for (Chef chef : chefsViernesADomingoYFeriados) {
             for (int i = 0; i < 3; i++) {
-                executorService2.submit(() -> {
-                    Map.Entry<String, Integer> recetaAleatoria = recetasList.get(random.nextInt(recetasList.size()));
-                    System.out.println(recetaAleatoria.getKey());
-                    chef.prepararReceta(recetaAleatoria.getValue());
-                    iteracion2.incrementAndGet();
-                });
+                Map.Entry<String, Integer> recetaAleatoria = recetasList.get(random.nextInt(recetasList.size()));
+                chef.agregarRecetaPendiente(recetaAleatoria.getValue());
             }
+
+            executorService2.submit(() -> {
+                chef.prepararReceta();
+            });
+
         }
 
         executorService2.shutdown();
@@ -176,11 +169,5 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.printf("\nIteraciones: %d\n", iteracion2.get());
-
-        DespensaService.renovarIngredientes(despensa6);
-
-        System.out.println("\nArroz con Leche:");
-        chef6.prepararReceta(1);
     }
 }

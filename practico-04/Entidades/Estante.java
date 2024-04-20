@@ -26,7 +26,7 @@ public class Estante {
         utensilios.get(nombre).add(nuevoUtensilio);
     }
 
-    public synchronized Utensilio getUtensilio(String nombre, int vidaUtilRequerida) throws VidaUtilInsuficiente {
+    public synchronized void getUtensilio(String nombre, int vidaUtilRequerida) throws VidaUtilInsuficiente {
         Queue<Utensilio> utensiliosDeEsteTipo = utensilios.get(nombre);
         if (utensiliosDeEsteTipo == null || utensiliosDeEsteTipo.isEmpty()) {
             throw new VidaUtilInsuficiente("No hay más utensilios de tipo " + nombre + " disponibles.");
@@ -34,11 +34,12 @@ public class Estante {
         Utensilio utensilio = utensiliosDeEsteTipo.poll();
         utensilio.utilizar(vidaUtilRequerida);
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        } finally {
+            utensiliosDeEsteTipo.add(utensilio);
         }
-        return utensilio;
     }
 
     public boolean checkUtensilio(String nombre, int vidaUtil) throws VidaUtilInsuficiente {

@@ -2,30 +2,48 @@ package Entidades;
 
 import Servicios.CocinaService;
 import Servicios.DespensaService;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Chef {
     private final String nombre;
     private final int estrellasMichelin;
     private final Despensa despensa;
     private final Estante estante;
+    private final Queue<Integer> recetasPendientes;
 
     public Chef(String nombre, int estrellasMichelin, Despensa despensa, Estante estante) {
         this.nombre  = nombre;
         this.estrellasMichelin = estrellasMichelin;
         this.despensa = despensa;
         this.estante = estante;
+        this.recetasPendientes = new LinkedList<Integer>();
     }
 
-    public void prepararReceta(int numeroReceta) {
-        try {
-            boolean listosParaCocinar = DespensaService.verificarStockYVidaUtil(numeroReceta, despensa, estante);
-            if (listosParaCocinar) {
-                CocinaService.comenzarACocinar(numeroReceta, despensa, estante);
-                System.out.println("El Chef " + nombre + ", con " + estrellasMichelin + " estrellas Michelin, espera que disfrute su comida.");
-            } else {
-                System.out.println("El Chef " + nombre + ", con " + estrellasMichelin + " estrellas Michelin, dice que debe pedir algo preparable.");
+    public void agregarRecetaPendiente(Integer receta) {
+        recetasPendientes.add(receta);
+    }
+
+    public void prepararReceta() {
+        while (!recetasPendientes.isEmpty()) {
+            Integer receta = recetasPendientes.poll();
+            System.out.printf("El Chef %s está preparando la receta %d.\n", nombre, receta);
+            try {
+                boolean stockIngredientes = DespensaService.verificarStockIngredientes(receta, despensa);
+                boolean utensiliosSuficientes = DespensaService.verificarVidaUtilUtensilios(receta, estante);
+                if (stockIngredientes && utensiliosSuficientes) {
+                    CocinaService.comenzarACocinar(receta, despensa, estante);
+                    System.out.println("El Chef " + nombre + ", con " + estrellasMichelin + " estrellas Michelin, espera que disfrute su comida.");
+                } else if (!utensiliosSuficientes) {
+                    System.out.printf("Utensilios necesarios ocupados para preparar: " + receta + ".\n");
+                    recetasPendientes.add(receta);
+                } else {
+                    System.out.printf("Ingredientes insuficientes para preparar: " + receta + ".\n");
+                }
+            } catch (Exception  e) {
+                System.out.println("Receta no disponible en el menú.");
             }
-        } catch (Exception  e) {
-            System.out.println("Receta no disponible en el menú.");
         }
     }
 
